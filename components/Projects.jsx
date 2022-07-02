@@ -1,44 +1,38 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import propertyImg from "../public/assets/projects/property.jpg";
-import cryptoImg from "../public/assets/projects/crypto.jpg";
-import netflixImg from "../public/assets/projects/netflix.jpg";
-import twitchImg from "../public/assets/projects/twitch.jpg";
-import ProjectItem from "./ProjectItem";
+import Image from 'next/image';
+import React from 'react';
 
 const people = [
   {
     id: 1,
-    image: "/assets/userEight.png",
-    name: "Manish Kumar",
-    trainer: "Trainer",
+    image: '/assets/userEight.png',
+    name: 'Manish Kumar',
+    trainer: 'Trainer',
     title:
-      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+      'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
   },
   {
     id: 2,
-    image: "/assets/userFive.png",
-    name: "Manish Kumar",
-    trainer: "Trainer",
+    image: '/assets/userFive.png',
+    name: 'Manish Kumar',
+    trainer: 'Trainer',
     title:
-      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+      'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
   },
   {
     id: 3,
-    image: "/assets/userNine.png",
-    name: "Manish Kumar",
-    trainer: "Trainer",
+    image: '/assets/userNine.png',
+    name: 'Manish Kumar',
+    trainer: 'Trainer',
     title:
-      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+      'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
   },
   {
     id: 4,
-    image: "/assets/userTwo.png",
-    name: "Manish Kumar",
-    trainer: "Trainer",
+    image: '/assets/userTwo.png',
+    name: 'Manish Kumar',
+    trainer: 'Trainer',
     title:
-      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+      'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.',
   },
 ];
 
@@ -82,7 +76,10 @@ const Projects = () => {
       </div>
       <div className="flex flex-col lg:flex-row items-center mt-10 lg:mt-0 mx-auto w-[90%] h-full mb-10 justify-evenly">
         {people.map((item) => (
-          <div className="items-center hover:scale-105 ease-in duration-300 mx-auto text-center">
+          <div
+            key={item.id}
+            className="items-center hover:scale-105 ease-in duration-300 mx-auto text-center"
+          >
             <Image
               className="rounded-full"
               width={150}
