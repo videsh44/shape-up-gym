@@ -36,7 +36,7 @@ const Contact = () => {
                 <Image
                   className="rounded-xl hover:scale-105 ease-in duration-300"
                   src={ContactImg}
-                  alt="/"
+                  alt="shape up gym sector 55 contact us"
                 />
               </div>
               <div>

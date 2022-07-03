@@ -59,7 +59,7 @@ const Skills = () => {
                   width={50}
                   height={50}
                   src={item.image}
-                  alt="shape up dumbel photo"
+                  alt="shape up gym dumbel photo"
                 />
                 {/* <img
                   alt="altText"

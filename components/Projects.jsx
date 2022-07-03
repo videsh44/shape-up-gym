@@ -57,7 +57,7 @@ const Projects = () => {
               width={150}
               height={140}
               src={item.image}
-              alt="shape up trainer"
+              alt="shape up gym trainer"
             />
             <h1 className="text-[20px] font-medium pb-4 pt-4 text-center items-center">
               {item.name}
