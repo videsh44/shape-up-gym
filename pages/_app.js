@@ -1,11 +1,14 @@
 import Navbar from '../components/Navbar';
+import { AuthUserProvider } from '../context/AuthUserContext';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Navbar />
-      <Component {...pageProps} />
+      <AuthUserProvider>
+        <Navbar />
+        <Component {...pageProps} />
+      </AuthUserProvider>
     </>
   );
 }
