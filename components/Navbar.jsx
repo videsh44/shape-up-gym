@@ -1,11 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from 'react-icons/ai';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
-// import { useRouter } from 'next/router';
-import NavLogo from '../public/assets/logoGym.png';
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -39,7 +36,9 @@ const Navbar = () => {
     >
       <div className="flex justify-between items-center w-full h-full px-2 2xl:px-16">
         <Link href="/">
-          <a className="uppercase font-bold  text-[35px]">Shape up</a>
+          <a aria-label="shape up" className="uppercase font-bold  text-[35px]">
+            Shape up
+          </a>
           {/* <Image src={NavLogo} width="87" height="35" alt="/" /> */}
         </Link>
         <div>
@@ -50,20 +49,8 @@ const Navbar = () => {
             <li className="ml-10 text-sm font-medium uppercase hover:border-b">
               <Link href="/videos">Video Gallery</Link>
             </li>
-            {/* <li className="ml-10 text-sm font-medium uppercase hover:border-b">
-              <Link href="/#skills">Skills</Link>
-            </li>
-            <li className="ml-10 text-sm font-medium uppercase hover:border-b">
-              <Link href="/#projects">Projects</Link>
-            </li>
-            <li className="ml-10 text-sm font-medium uppercase hover:border-b">
-              <Link href="/resume">Resume</Link>
-            </li>
-            <li className="ml-10 text-sm font-medium uppercase hover:border-b">
-              <Link href="/#contact">Contact</Link>
-            </li> */}
           </ul>
-          {/* Hamburger Icon */}
+
           <div
             style={{ color: `${linkColor}` }}
             onClick={handleNav}
@@ -73,15 +60,11 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {/* Overlay */}
       <div
         className={
           nav ? 'md:hidden fixed left-0 top-0 w-full h-screen bg-black/70' : ''
         }
       >
-        {/* Side Drawer Menu */}
         <div
           className={
             nav
@@ -92,7 +75,12 @@ const Navbar = () => {
           <div>
             <div className="flex w-full items-center justify-between">
               <Link href="/">
-                <a className="uppercase font-bold text-[30px]">Shape up</a>
+                <a
+                  aria-label="shape up"
+                  className="uppercase font-bold text-[30px]"
+                >
+                  Shape up
+                </a>
               </Link>
               <div
                 onClick={handleNav}
@@ -119,26 +107,6 @@ const Navbar = () => {
                   Video Gallery
                 </li>
               </Link>
-              {/* <Link href="/#skills">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Skills
-                </li>
-              </Link>
-              <Link href="/#projects">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Projects
-                </li>
-              </Link>
-              <Link href="/resume">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Resume
-                </li>
-              </Link>
-              <Link href="/#contact">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Contact
-                </li>
-              </Link> */}
             </ul>
             <div className="pt-28">
               <p className="uppercase tracking-widest text-[#5651e5]">
@@ -146,6 +114,7 @@ const Navbar = () => {
               </p>
               <div className="flex items-center justify-between my-4 w-full sm:w-[80%]">
                 <a
+                  aria-label="linkedin"
                   href="https://www.linkedin.com/in/clint-briley-50056920a/"
                   target="_blank"
                   rel="noreferrer"
@@ -155,6 +124,7 @@ const Navbar = () => {
                   </div>
                 </a>
                 <a
+                  aria-label="github"
                   href="https://github.com/fireclint"
                   target="_blank"
                   rel="noreferrer"

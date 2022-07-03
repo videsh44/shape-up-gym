@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React from 'react';
 
 const people = [
   {
@@ -45,33 +44,6 @@ const Projects = () => {
             Trainer
           </p>
           <h2 className="py-4">Our Trainers</h2>
-
-          {/* <div className="grid md:grid-cols-2 gap-8">
-      <ProjectItem
-        title="Property Finder"
-        backgroundImg={propertyImg}
-        projectUrl="/property"
-        tech="React JS"
-      />
-      <ProjectItem
-        title="Crypto App"
-        backgroundImg={cryptoImg}
-        projectUrl="/crypto"
-        tech="React JS"
-      />
-      <ProjectItem
-        title="Netflix App"
-        backgroundImg={netflixImg}
-        projectUrl="/netflix"
-        tech="React JS"
-      />
-      <ProjectItem
-        title="Twitch UI"
-        backgroundImg={twitchImg}
-        projectUrl="/twitch"
-        tech="Next JS"
-      />
-    </div> */}
         </div>
       </div>
       <div className="flex flex-col lg:flex-row items-center mt-10 lg:mt-0 mx-auto w-[90%] h-full mb-10 justify-evenly">
@@ -85,6 +57,7 @@ const Projects = () => {
               width={150}
               height={140}
               src={item.image}
+              alt="shape up trainer"
             />
             <h1 className="text-[20px] font-medium pb-4 pt-4 text-center items-center">
               {item.name}

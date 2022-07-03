@@ -7,13 +7,15 @@ import {
   orderBy,
   query,
 } from 'firebase/firestore';
+import Head from 'next/head';
 import { useEffect, useState, useRef } from 'react';
 import Modal from '../components/Modal';
 import VideoUploadForm from '../components/VideoUploadForm';
 import { projectFirestore } from '../firebase/config';
+import LazyLoad from 'vanilla-lazyload';
+import lazyloadConfig from '../lazy-load/config';
 
 export default function Videos({ imagesData }) {
-  //   const { docs } = useFirestore('videos');
   const [showModal, setShowModal] = useState(false);
   const videoPlayerRef = useRef(null);
   const [imagesState, setImagesState] = useState(imagesData);
@@ -21,13 +23,14 @@ export default function Videos({ imagesData }) {
     imagesData && imagesData.length ? imagesData[0] : {}
   );
 
-  //   useEffect(() => {
-  //     if (docs) {
-  //       setImagesState(docs);
-  //     }
-  //   }, [docs]);
-  console.log(imagesData);
-  //   console.log('docs', docs);
+  useEffect(() => {
+    if (!document.lazyLoadInstance) {
+      document.lazyLoadInstance = new LazyLoad(lazyloadConfig);
+    }
+    document.lazyLoadInstance.update();
+  }, []);
+
+  //   console.log(imagesData);
 
   const onDeleteIamge = async (e, id) => {
     e.stopPropagation();
@@ -48,6 +51,11 @@ export default function Videos({ imagesData }) {
 
   return (
     <>
+      <Head>
+        <title>Shape Up Gym Videos</title>
+        <meta name="description" content="Shape Up Gym video gallery" />
+        <link rel="icon" href="/fav.png" />
+      </Head>
       <div
       // className={styles.container}
       >
@@ -56,7 +64,7 @@ export default function Videos({ imagesData }) {
             <video
               ref={videoPlayerRef}
               style={{ height: '400px' }}
-              className="main-video-player"
+              className="main-video-player lazy__item"
               width="100%"
               height={300}
               controls
@@ -69,6 +77,7 @@ export default function Videos({ imagesData }) {
         </div>
         <div style={{ textAlign: 'center' }}>
           <button
+            aria-label="upload"
             onClick={() => setShowModal(true)}
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
           >
@@ -107,6 +116,7 @@ export default function Videos({ imagesData }) {
                 key={item.id}
               >
                 <button
+                  aria-label="delete"
                   onClick={(e) => onDeleteIamge(e, item.id)}
                   style={{
                     position: 'absolute',
@@ -155,6 +165,8 @@ export default function Videos({ imagesData }) {
                   Your browser does not support HTML video.
                 </video> */}
                 <video
+                  //   preload="none"
+                  className="lazy__item"
                   style={{ height: '200px', objectFit: 'cover' }}
                   width={300}
                   src={`${item.url}#t=1`}

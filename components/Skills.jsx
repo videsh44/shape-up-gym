@@ -1,4 +1,4 @@
-import React from 'react';
+import Image from 'next/image';
 
 const list = [
   {
@@ -54,15 +54,25 @@ const Skills = () => {
                 key={i}
                 className="w-[95%] mb-11 shadow-xl rounded-xl hover:scale-105 ease-in duration-300 border-[#EAECF0] border-[1px] p-4 mx-auto "
               >
-                <img
+                <Image
+                  className="mx-auto mt-2 w-14 h-14"
+                  width={50}
+                  height={50}
+                  src={item.image}
+                  alt="shape up dumbel photo"
+                />
+                {/* <img
                   alt="altText"
                   className="mx-auto mt-2 w-14 h-14"
                   src={item.image}
-                />
+                /> */}
                 <h1 className="text-[20px] py-2 mt-4 font-[700] text-[#101828]">
                   {item.heading}
                 </h1>
-                <p className="text-[#667085] py-2 text-[16px] font-[700]">
+                <p
+                  aria-hidden="true"
+                  className="text-[#667085] py-2 text-[16px] font-[700]"
+                >
                   {item.title}
                 </p>
               </div>
