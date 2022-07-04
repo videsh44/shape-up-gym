@@ -1,4 +1,6 @@
-html,
+html {
+  scroll-behavior: smooth;
+}
 body {
   padding: 0;
   margin: 0;
@@ -49,7 +51,6 @@ li {
 button {
   @apply shadow-xl shadow-gray-400 rounded-xl uppercase bg-gradient-to-t from-[#5651e5] to-[#709dff] text-white;
 }
-
 
 .shim-green {
   position: relative;

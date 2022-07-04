@@ -1,19 +1,19 @@
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { useState } from 'react';
-import { projectFirestore, projectStorage } from '../firebase/config';
-import ErrorToast from './ErrorToast';
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { useState } from "react";
+import { projectFirestore, projectStorage } from "../firebase/config";
+import ErrorToast from "./ErrorToast";
 
 const VideoUploadForm = ({ closeModal }) => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [text, setText] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
+  const [text, setText] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const [videoDuration, setVideoDuration] = useState(0);
   const [errorToastState, setErrorToastState] = useState(null);
 
-  const types = ['image/png', 'image/jpeg'];
+  const types = ["image/png", "image/jpeg"];
 
   const handleChange = (e) => {
     let selected = e.target.files[0];
@@ -35,7 +35,7 @@ const VideoUploadForm = ({ closeModal }) => {
       // const collectionRef = projectFirestore.collection('images');
 
       uploadTask.on(
-        'state_changed',
+        "state_changed",
         (snap) => {
           let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
           setProgress(percentage);
@@ -52,10 +52,10 @@ const VideoUploadForm = ({ closeModal }) => {
           // });
         }
       );
-      setError('');
+      setError("");
     } else {
       setFile(null);
-      setError('Please select an image file (png or jpg)');
+      setError("Please select an image file (png or jpg)");
     }
   };
 
@@ -66,19 +66,19 @@ const VideoUploadForm = ({ closeModal }) => {
   const onSubmit = async () => {
     if (!file) {
       let temp_error = {
-        color: 'red',
-        primaryText: 'Validation Error',
-        secondaryText: '',
-        description: 'Please Upload File',
+        color: "red",
+        primaryText: "Validation Error",
+        secondaryText: "",
+        description: "Please Upload File",
       };
       setErrorToastState(temp_error);
       return;
     }
     if (error) {
       let temp_error = {
-        color: 'red',
-        primaryText: 'Validation Error',
-        secondaryText: '',
+        color: "red",
+        primaryText: "Validation Error",
+        secondaryText: "",
         description: error,
       };
       setErrorToastState(temp_error);
@@ -87,36 +87,36 @@ const VideoUploadForm = ({ closeModal }) => {
 
     if (!text) {
       let temp_error = {
-        color: 'red',
-        primaryText: 'Validation Error',
-        secondaryText: '',
-        description: 'Please Enter Title',
+        color: "red",
+        primaryText: "Validation Error",
+        secondaryText: "",
+        description: "Please Enter Title",
       };
       setErrorToastState(temp_error);
       return;
     }
     if (progress !== 100) {
       let temp_error = {
-        color: 'red',
-        primaryText: 'Uploading...',
+        color: "red",
+        primaryText: "Uploading...",
         secondaryText: `${Math.ceil(progress)}% `,
-        description: 'Please Wait for Upload to complete',
+        description: "Please Wait for Upload to complete",
       };
       setErrorToastState(temp_error);
       return;
     }
     if (!imgUrl) {
       let temp_error = {
-        color: 'yellow',
-        primaryText: 'Uploading...',
+        color: "yellow",
+        primaryText: "Uploading...",
         secondaryText: `${Math.ceil(progress)}% `,
-        description: 'Please Wait for Almost Done',
+        description: "Please Wait for Almost Done",
       };
       setErrorToastState(temp_error);
       return;
     }
 
-    const docRef = await addDoc(collection(projectFirestore, 'videos'), {
+    const docRef = await addDoc(collection(projectFirestore, "videos"), {
       url: imgUrl,
       title: text,
       duration: videoDuration,
@@ -147,19 +147,18 @@ const VideoUploadForm = ({ closeModal }) => {
       <div>
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div
-            style={{ width: '350px' }}
+            style={{ width: "350px" }}
             className="mt-5 md:mt-0 md:col-span-1"
           >
             {/* <form action="#" method="POST"> */}
             <div className="shadow sm:rounded-md sm:overflow-hidden">
-              <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+              <div className="px-4 py-5 space-y-6 bg-white sm:p-6">
                 <div>
                   <label
                     htmlFor="about"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    {' '}
-                    Title{' '}
+                    Title
                   </label>
                   <div className="mt-1">
                     <textarea
@@ -167,8 +166,8 @@ const VideoUploadForm = ({ closeModal }) => {
                       id="about"
                       name="about"
                       rows="3"
-                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                      placeholder="enter your title here"
+                      className="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Enter your title here"
                     ></textarea>
                   </div>
                 </div>
@@ -178,10 +177,10 @@ const VideoUploadForm = ({ closeModal }) => {
                     {' '}
                     Photo{' '}
                   </label>
-                  <div className="mt-1 flex items-center">
-                    <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                  <div className="flex items-center mt-1">
+                    <span className="inline-block w-12 h-12 overflow-hidden bg-gray-100 rounded-full">
                       <svg
-                        className="h-full w-full text-gray-300"
+                        className="w-full h-full text-gray-300"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -190,7 +189,7 @@ const VideoUploadForm = ({ closeModal }) => {
                     </span>
                     <button
                       type="button"
-                      className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="px-3 py-2 ml-5 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       Change
                     </button>
@@ -202,10 +201,10 @@ const VideoUploadForm = ({ closeModal }) => {
                     {' '}
                     Cover photo{' '}
                   </label> */}
-                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                  <div className="flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-gray-300 border-dashed rounded-md">
                     <div className="space-y-1 text-center">
                       <svg
-                        className="mx-auto h-12 w-12 text-gray-400"
+                        className="w-12 h-12 mx-auto text-gray-400"
                         stroke="currentColor"
                         fill="none"
                         viewBox="0 0 48 48"
@@ -221,7 +220,7 @@ const VideoUploadForm = ({ closeModal }) => {
                       <div className="flex text-sm text-gray-600">
                         <label
                           htmlFor="file-upload"
-                          className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                          className="relative font-medium text-indigo-600 bg-white rounded-md cursor-pointer hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                         >
                           <span>Upload a Video</span>
                           <input
@@ -244,7 +243,7 @@ const VideoUploadForm = ({ closeModal }) => {
               </div>
 
               {progress === 0 || progress === 100 ? null : (
-                <div className="p-10 flex flex-col space-y-3">
+                <div className="flex flex-col p-10 space-y-3">
                   <div className="relative w-full bg-gray-200 rounded">
                     <div
                       style={{ width: `${progress}%` }}
@@ -254,14 +253,14 @@ const VideoUploadForm = ({ closeModal }) => {
                 </div>
               )}
 
-              <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <button
+              <div className="px-4 py-3 text-right bg-gray-50 sm:px-6">
+                <div
                   onClick={onSubmit}
                   //   type="submit"
-                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-lg shadow-sm cursor-pointer hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Save
-                </button>
+                </div>
               </div>
             </div>
             {/* </form> */}
