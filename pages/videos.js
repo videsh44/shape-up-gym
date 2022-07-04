@@ -77,24 +77,8 @@ export default function Videos({ imagesData }) {
       <div
       // className={styles.container}
       >
-        <div style={{ height: '400px', marginBottom: '50px' }}>
-          {imagesState && (
-            <video
-              ref={videoPlayerRef}
-              style={{ height: '400px' }}
-              className="main-video-player lazy__item"
-              width="100%"
-              height={300}
-              controls
-            >
-              <source src={selectedVideoToPlay?.url} type="video/mp4" />
-              <source src={selectedVideoToPlay?.url} type="video/ogg" />
-              Your browser does not support HTML video.
-            </video>
-          )}
-        </div>
         {authUser ? (
-          <div style={{ textAlign: 'center' }}>
+          <div className="pt-20 w-full bg-white justify-end ">
             <button
               aria-label="upload"
               onClick={() => setShowModal(true)}
@@ -119,7 +103,7 @@ export default function Videos({ imagesData }) {
             </button>
           </div>
         ) : (
-          <div style={{ textAlign: 'center' }}>
+          <div className="pt-20 w-full bg-white justify-end">
             <button
               aria-label="login"
               onClick={openLoginModal}
@@ -141,6 +125,23 @@ export default function Videos({ imagesData }) {
             </button>
           </div>
         )}
+        <div style={{ height: '400px', marginBottom: '50px' }}>
+          {imagesState && (
+            <video
+              ref={videoPlayerRef}
+              style={{ height: '400px' }}
+              className="main-video-player lazy__item"
+              width="100%"
+              height={300}
+              controls
+            >
+              <source src={selectedVideoToPlay?.url} type="video/mp4" />
+              <source src={selectedVideoToPlay?.url} type="video/ogg" />
+              Your browser does not support HTML video.
+            </video>
+          )}
+        </div>
+
         {/* <UploadFormVideo /> */}
         {imagesState && (
           <div
