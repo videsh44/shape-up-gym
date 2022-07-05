@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Loader from "../Loader";
-import Header from "./Header";
-import Modal from "./Modal";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Loader from '../Loader';
+import Header from './Header';
+import Modal from './Modal';
+import { motion } from 'framer-motion';
 import {
   collection,
   deleteDoc,
@@ -14,9 +14,9 @@ import {
   orderBy,
   query,
   startAfter,
-} from "firebase/firestore";
-import { projectFirestore } from "../../firebase/config";
-import { useAuth } from "../../context/AuthUserContext";
+} from 'firebase/firestore';
+import { projectFirestore } from '../../firebase/config';
+import { useAuth } from '../../context/AuthUserContext';
 // import useFirestore from "../../../hooks/useFirestore";
 
 const Gallery = ({ imagesData, totalDocs }) => {
@@ -29,8 +29,8 @@ const Gallery = ({ imagesData, totalDocs }) => {
 
   useEffect(() => {
     (async () => {
-      const imagesRef = await collection(projectFirestore, "images");
-      const q = await query(imagesRef, orderBy("timestamp", "desc"), limit(8));
+      const imagesRef = await collection(projectFirestore, 'images');
+      const q = await query(imagesRef, orderBy('timestamp', 'desc'), limit(8));
       const res = await getDocs(q);
 
       const lastVisible = res.docs[res.docs.length - 1];
@@ -39,12 +39,12 @@ const Gallery = ({ imagesData, totalDocs }) => {
   }, []);
 
   const fetchImages = async () => {
-    const imagesRef = collection(projectFirestore, "images");
+    const imagesRef = collection(projectFirestore, 'images');
 
     if (lastImageRef) {
       const q = await query(
         imagesRef,
-        orderBy("timestamp", "desc"),
+        orderBy('timestamp', 'desc'),
         startAfter(lastImageRef),
         limit(8)
       );
@@ -55,7 +55,7 @@ const Gallery = ({ imagesData, totalDocs }) => {
       });
       const lastVisible = res.docs[res.docs.length - 1];
       setLastImageRef(lastVisible);
-      console.log("here it is", documents);
+      console.log('here it is', documents);
       let final_images = [...images, ...documents];
       setTotalItemsAfterDelete(final_images.length);
       setImages(final_images);
@@ -78,12 +78,12 @@ const Gallery = ({ imagesData, totalDocs }) => {
 
   const onDeleteIamge = async (e, id) => {
     e.stopPropagation();
-    const deleteRef = doc(projectFirestore, "images", id);
+    const deleteRef = doc(projectFirestore, 'images', id);
     await deleteDoc(deleteRef);
-    const imagesRef = collection(projectFirestore, "images");
+    const imagesRef = collection(projectFirestore, 'images');
     const q = query(
       imagesRef,
-      orderBy("timestamp", "desc"),
+      orderBy('timestamp', 'desc'),
       limit(totalItemsAfterDelete)
     );
     const res = await getDocs(q);
@@ -94,13 +94,13 @@ const Gallery = ({ imagesData, totalDocs }) => {
     const lastVisible = res.docs[res.docs.length - 1];
     setLastImageRef(lastVisible);
     /**............GET TOTAL............. */
-    const totQ = await query(imagesRef, orderBy("timestamp", "desc"));
+    const totQ = await query(imagesRef, orderBy('timestamp', 'desc'));
     const totRes = await getDocs(totQ);
     const totalDocs = totRes.docs.length;
     setTotal(totalDocs);
     // console.log(totalDocs);
     /**............GET TOTAL............. */
-    console.log("documents", documents);
+    console.log('documents', documents);
     setImages(documents);
     // const unsub = onSnapshot(q, (querySnapshot) => {
     //   let documents = [];
@@ -113,9 +113,29 @@ const Gallery = ({ imagesData, totalDocs }) => {
     // setImages(docs);
   };
 
-  const updateImagesData = (data, length) => {
-    setImages(data);
-    setTotal(length);
+  const updateImagesData = async () => {
+    const imagesRef = collection(projectFirestore, 'images');
+    const q = query(
+      imagesRef,
+      orderBy('timestamp', 'desc'),
+      limit(totalItemsAfterDelete)
+    );
+    const res = await getDocs(q);
+    let documents = [];
+    res.forEach((doc) => {
+      documents.push({ ...doc.data(), id: doc.id });
+    });
+    const lastVisible = res.docs[res.docs.length - 1];
+    setLastImageRef(lastVisible);
+
+    /**............GET TOTAL............. */
+    const totQ = await query(imagesRef, orderBy('timestamp', 'desc'));
+    const totRes = await getDocs(totQ);
+    const totalDocs = totRes.docs.length;
+    setTotal(totalDocs);
+    console.log('documents', documents);
+    setImages(documents);
+    // setTotal(length);
   };
 
   // const [images, setImages] = useState([]);

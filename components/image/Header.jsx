@@ -19,7 +19,7 @@ const Header = ({ updateImagesData }) => {
 
   const types = ['image/png', 'image/jpeg'];
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     let selected = e.target.files[0];
 
     if (selected && types.includes(selected.type)) {
@@ -46,17 +46,19 @@ const Header = ({ updateImagesData }) => {
             timestamp: serverTimestamp(),
           });
           setComplete(url);
+          await updateImagesData();
         }
       );
-      const imagesRef = collection(projectFirestore, 'images');
-      const q = query(imagesRef, orderBy('timestamp', 'desc'), limit(10));
-      const unsub = onSnapshot(q, (querySnapshot) => {
-        let documents = [];
-        querySnapshot.forEach((doc) => {
-          documents.push({ ...doc.data(), id: doc.id });
-          updateImagesData(documents, documents.length);
-        });
-      });
+      // const imagesRef = collection(projectFirestore, 'images');
+      // const q = query(imagesRef, orderBy('timestamp', 'desc'), limit(10));
+
+      // const unsub = onSnapshot(q, (querySnapshot) => {
+      //   let documents = [];
+      //   querySnapshot.forEach((doc) => {
+      //     documents.push({ ...doc.data(), id: doc.id });
+      //     updateImagesData(documents, documents.length);
+      //   });
+      // });
 
       setError('');
     } else {
