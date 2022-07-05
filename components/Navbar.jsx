@@ -1,14 +1,14 @@
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from 'react-icons/ai';
-import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
-import { BsFillPersonLinesFill } from 'react-icons/bs';
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from "react-icons/ai";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { BsFillPersonLinesFill } from "react-icons/bs";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [shadow, setShadow] = useState(false);
-  const [navBg, setNavBg] = useState('#ecf0f3');
-  const [linkColor, setLinkColor] = useState('#1f2937');
+  const [navBg, setNavBg] = useState("#ecf0f3");
+  const [linkColor, setLinkColor] = useState("#1f2937");
 
   const handleNav = () => {
     setNav(!nav);
@@ -22,7 +22,7 @@ const Navbar = () => {
         setShadow(false);
       }
     };
-    window.addEventListener('scroll', handleShadow);
+    window.addEventListener("scroll", handleShadow);
   }, []);
 
   return (
@@ -30,11 +30,11 @@ const Navbar = () => {
       style={{ backgroundColor: `${navBg}` }}
       className={
         shadow
-          ? 'fixed w-full h-[4rem] shadow-xl z-[100] ease-in-out duration-300'
-          : 'fixed w-full h-[4rem] z-[100]'
+          ? "fixed w-full h-[4rem] shadow-xl z-[100] ease-in-out duration-300"
+          : "fixed w-full h-[4rem] z-[100]"
       }
     >
-      <div className="flex justify-between items-center w-full h-full px-2 2xl:px-16">
+      <div className="flex items-center justify-between w-full h-full px-2 2xl:px-16">
         <Link href="/">
           <a aria-label="shape up" className="uppercase font-bold  text-[35px]">
             Shape up
@@ -43,21 +43,31 @@ const Navbar = () => {
         </Link>
         <div>
           <ul style={{ color: `${linkColor}` }} className="hidden md:flex">
-            <li className="ml-10 text-sm font-medium uppercase hover:border-b">
+            <li className="ml-10 text-sm font-medium uppercase hover:text-[#1C417D]">
               <Link href="/">Home</Link>
             </li>
-            <li className="ml-10 text-sm font-medium uppercase hover:border-b">
-              <Link href="/videos">Video Gallery</Link>
+            <li className="ml-10 text-sm font-medium uppercase hover:text-[#1C417D]">
+              <Link href="/#about">About</Link>
             </li>
-            <li className="ml-10 text-sm font-medium uppercase hover:border-b">
+            <li className="ml-10 text-sm font-medium uppercase hover:text-[#1C417D]">
+              <Link href="/#skills">Skills</Link>
+            </li>
+            <li className="ml-10 text-sm font-medium uppercase hover:text-[#1C417D] ">
+              <Link href="/#projects">Trainers</Link>
+            </li>
+
+            <li className="ml-10 text-sm font-medium uppercase hover:text-[#1C417D]">
               <Link href="/images">Image Gallery</Link>
+            </li>
+            <li className="ml-10 text-sm font-medium uppercase hover:text-[#1C417D]">
+              <Link href="/videos">Video Gallery</Link>
             </li>
           </ul>
 
           <div
             style={{ color: `${linkColor}` }}
             onClick={handleNav}
-            className="md:hidden cursor-pointer"
+            className="cursor-pointer md:hidden"
           >
             <AiOutlineMenu size={25} />
           </div>
@@ -65,18 +75,18 @@ const Navbar = () => {
       </div>
       <div
         className={
-          nav ? 'md:hidden fixed left-0 top-0 w-full h-screen bg-black/70' : ''
+          nav ? "md:hidden fixed left-0 top-0 w-full h-screen bg-black/70" : ""
         }
       >
         <div
           className={
             nav
-              ? ' fixed left-0 top-0 w-[75%]  sm:w-[60%] md:w-[45%] h-screen bg-[#ecf0f3] p-10 ease-in duration-500'
-              : 'fixed left-[-100%] top-0 p-10 ease-in duration-500'
+              ? " fixed left-0 top-0 w-[75%]  sm:w-[60%] md:w-[45%] h-screen bg-[#ecf0f3] p-10 ease-in duration-500"
+              : "fixed left-[-100%] top-0 p-10 ease-in duration-500"
           }
         >
           <div>
-            <div className="flex w-full items-center justify-between">
+            <div className="flex items-center justify-between w-full">
               <Link href="/">
                 <a
                   aria-label="shape up"
@@ -87,32 +97,74 @@ const Navbar = () => {
               </Link>
               <div
                 onClick={handleNav}
-                className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer"
+                className="p-3 rounded-full shadow-lg cursor-pointer shadow-gray-400"
               >
                 <AiOutlineClose />
               </div>
             </div>
-            <div className="border-b border-gray-300 my-4">
+            <div className="my-4 border-b border-gray-300">
               <p className="w-[85%] md:w-[90%] py-4">
                 Let&#39;s build something legendary together
               </p>
             </div>
           </div>
-          <div className="py-4 flex flex-col">
+          <div className="flex flex-col py-4">
             <ul className="uppercase">
               <Link href="/">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 hover:text-[#1C417D] text-sm"
+                >
                   Home
                 </li>
               </Link>
-              <Link href="/videos">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Video Gallery
+              <Link href="/#about">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 hover:text-[#1C417D] text-sm"
+                >
+                  About
+                </li>
+              </Link>
+              <Link href="/#skills">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 hover:text-[#1C417D] text-sm"
+                >
+                  Skills
+                </li>
+              </Link>
+              <Link href="/#projects">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 hover:text-[#1C417D] text-sm"
+                >
+                  Trainers
                 </li>
               </Link>
               <Link href="/images">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 hover:text-[#1C417D] text-sm"
+                >
                   Image Gallery
+                </li>
+              </Link>
+              <Link href="/videos">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 hover:text-[#1C417D] text-sm"
+                >
+                  Video Gallery
+                </li>
+              </Link>
+
+              <Link href="/#contact">
+                <li
+                  onClick={() => setNav(false)}
+                  className="py-4 hover:text-[#1C417D] text-sm"
+                >
+                  Contact
                 </li>
               </Link>
             </ul>
@@ -127,7 +179,7 @@ const Navbar = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <div className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-300">
+                  <div className="p-3 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 hover:scale-105">
                     <FaLinkedinIn />
                   </div>
                 </a>
@@ -137,14 +189,14 @@ const Navbar = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <div className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-300">
+                  <div className="p-3 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 hover:scale-105">
                     <FaGithub />
                   </div>
                 </a>
                 <Link href="/#contact">
                   <div
                     onClick={() => setNav(!nav)}
-                    className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-300"
+                    className="p-3 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 hover:scale-105"
                   >
                     <AiOutlineMail />
                   </div>
@@ -152,7 +204,7 @@ const Navbar = () => {
                 <Link href="/resume">
                   <div
                     onClick={() => setNav(!nav)}
-                    className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-300"
+                    className="p-3 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 hover:scale-105"
                   >
                     <BsFillPersonLinesFill />
                   </div>

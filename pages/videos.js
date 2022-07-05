@@ -6,16 +6,16 @@ import {
   limit,
   orderBy,
   query,
-} from 'firebase/firestore';
-import Head from 'next/head';
-import { useEffect, useState, useRef } from 'react';
-import Modal from '../components/Modal';
-import VideoUploadForm from '../components/VideoUploadForm';
-import { auth, projectFirestore } from '../firebase/config';
-import LazyLoad from 'vanilla-lazyload';
-import lazyloadConfig from '../lazy-load/config';
-import { useAuth } from '../context/AuthUserContext';
-import LoginForm from '../components/LoginForm';
+} from "firebase/firestore";
+import Head from "next/head";
+import { useEffect, useState, useRef } from "react";
+import Modal from "../components/Modal";
+import VideoUploadForm from "../components/VideoUploadForm";
+import { auth, projectFirestore } from "../firebase/config";
+import LazyLoad from "vanilla-lazyload";
+import lazyloadConfig from "../lazy-load/config";
+import { useAuth } from "../context/AuthUserContext";
+import LoginForm from "../components/LoginForm";
 
 export default function Videos({ imagesData }) {
   const { authUser, loading, signOutFunc } = useAuth();
@@ -39,14 +39,14 @@ export default function Videos({ imagesData }) {
   const onDeleteIamge = async (e, id) => {
     e.stopPropagation();
 
-    const deleteRef = doc(projectFirestore, 'videos', id);
+    const deleteRef = doc(projectFirestore, "videos", id);
     await deleteDoc(deleteRef);
   };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -78,32 +78,33 @@ export default function Videos({ imagesData }) {
       // className={styles.container}
       >
         {authUser ? (
-          <div className="pt-20 w-full bg-white justify-end ">
-            <button
-              aria-label="upload"
-              onClick={() => setShowModal(true)}
-              className="text-white mr-5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              <svg
-                className="fill-current w-4 h-4 mr-2"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
+          <div className="w-full bg-white ">
+            <div className="flex items-center justify-end px-10 pb-8 mx-auto pt-[6rem]">
+              <button
+                onClick={() => setShowModal(true)}
+                className="inline-flex items-center  hover:scale-105 duration-100 ease-in  px-6 py-4 border-[#D0D5DD] font-bold text-white bg-[#161C2D] rounded-md cursor-pointer"
               >
-                <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-              </svg>
-              Upload Videos
-            </button>
+                <svg
+                  className="w-4 h-4 mr-2 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                </svg>
+                <span>Upload Videos</span>
+              </button>
 
-            <button
-              aria-label="logout"
-              onClick={() => signOutFunc(auth)}
-              className="text-white ml-5 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900"
-            >
-              <span>Logout</span>
-            </button>
+              <button
+                aria-label="logout"
+                onClick={() => signOutFunc(auth)}
+                className="inline-flex items-center ml-4 hover:scale-105 duration-100 ease-in  px-6 py-4 border-[#D0D5DD] font-bold text-white bg-[#161C2D] rounded-md cursor-pointer"
+              >
+                <span>Logout</span>
+              </button>
+            </div>
           </div>
         ) : (
-          <div className="pt-20 w-full bg-white justify-end">
+          <div className="justify-end w-full pt-20 bg-white">
             <button
               aria-label="login"
               onClick={openLoginModal}
@@ -125,12 +126,11 @@ export default function Videos({ imagesData }) {
             </button>
           </div>
         )}
-        <div style={{ height: '400px', marginBottom: '50px' }}>
+        <div className="bg-black  relative h-[37.5rem] mb-12">
           {imagesState && (
             <video
               ref={videoPlayerRef}
-              style={{ height: '400px' }}
-              className="main-video-player lazy__item"
+              className="main-video-player h-[37.5rem]"
               width="100%"
               height={300}
               controls
@@ -140,29 +140,30 @@ export default function Videos({ imagesData }) {
               Your browser does not support HTML video.
             </video>
           )}
+          {imagesState.map((item) => (
+            <div className="absolute justify-center w-full p-4 pb-4 mx-auto bg-white shadow-sm ">
+              <p className="font-bold text-[20px] whitespace-nowrap overflow-hidden overflow-ellipsis">
+                {item.title}
+              </p>
+              <p className="text-[15px] text-gray-500">
+                <span className="pr-2"> Duration :</span>
+
+                {item.duration
+                  ? new Date(Math.floor(item.duration) * 1000)
+                      .toISOString()
+                      .substring(14, 19)
+                  : null}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* <UploadFormVideo /> */}
         {imagesState && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-            }}
-          >
+          <div className="flex flex-wrap items-center justify-center mt-28">
             {imagesState.map((item) => (
               <div
-                style={{
-                  position: 'relative',
-                  width: '300px',
-                  maxWidth: '300px',
-                  boxShadow:
-                    'rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px ',
-                  margin: '20px',
-                  cursor: 'pointer',
-                }}
+                className="relative w-[300px] max-w-[300px] m-5 cursor-pointer"
                 onClick={() => onVideoSelectClick(item)}
                 key={item.id}
               >
@@ -170,44 +171,18 @@ export default function Videos({ imagesData }) {
                   <button
                     aria-label="delete"
                     onClick={(e) => onDeleteIamge(e, item.id)}
-                    style={{
-                      position: 'absolute',
-                      right: '-15px',
-                      top: '-15px',
-                      border: 0,
-                      outline: 0,
-                      background: 'transparent',
-                    }}
+                    className="absolute z-50 p-1 hover:scale-105 duration-100 ease-in bg-white border-[1px] border-[#D0D5DD] rounded-full -right-3 -top-3"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 100 100"
-                      width="30px"
-                      height="30px"
+                      class="h-5  w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
                     >
                       <path
-                        fill="#f37e98"
-                        d="M25,30l3.645,47.383C28.845,79.988,31.017,82,33.63,82h32.74c2.613,0,4.785-2.012,4.985-4.617L75,30"
-                      />
-                      <path
-                        fill="#f15b6c"
-                        d="M65 38v35c0 1.65-1.35 3-3 3s-3-1.35-3-3V38c0-1.65 1.35-3 3-3S65 36.35 65 38zM53 38v35c0 1.65-1.35 3-3 3s-3-1.35-3-3V38c0-1.65 1.35-3 3-3S53 36.35 53 38zM41 38v35c0 1.65-1.35 3-3 3s-3-1.35-3-3V38c0-1.65 1.35-3 3-3S41 36.35 41 38zM77 24h-4l-1.835-3.058C70.442 19.737 69.14 19 67.735 19h-35.47c-1.405 0-2.707.737-3.43 1.942L27 24h-4c-1.657 0-3 1.343-3 3s1.343 3 3 3h54c1.657 0 3-1.343 3-3S78.657 24 77 24z"
-                      />
-                      <path
-                        fill="#1f212b"
-                        d="M66.37 83H33.63c-3.116 0-5.744-2.434-5.982-5.54l-3.645-47.383 1.994-.154 3.645 47.384C29.801 79.378 31.553 81 33.63 81H66.37c2.077 0 3.829-1.622 3.988-3.692l3.645-47.385 1.994.154-3.645 47.384C72.113 80.566 69.485 83 66.37 83zM56 20c-.552 0-1-.447-1-1v-3c0-.552-.449-1-1-1h-8c-.551 0-1 .448-1 1v3c0 .553-.448 1-1 1s-1-.447-1-1v-3c0-1.654 1.346-3 3-3h8c1.654 0 3 1.346 3 3v3C57 19.553 56.552 20 56 20z"
-                      />
-                      <path
-                        fill="#1f212b"
-                        d="M77,31H23c-2.206,0-4-1.794-4-4s1.794-4,4-4h3.434l1.543-2.572C28.875,18.931,30.518,18,32.265,18h35.471c1.747,0,3.389,0.931,4.287,2.428L73.566,23H77c2.206,0,4,1.794,4,4S79.206,31,77,31z M23,25c-1.103,0-2,0.897-2,2s0.897,2,2,2h54c1.103,0,2-0.897,2-2s-0.897-2-2-2h-4c-0.351,0-0.677-0.185-0.857-0.485l-1.835-3.058C69.769,20.559,68.783,20,67.735,20H32.265c-1.048,0-2.033,0.559-2.572,1.457l-1.835,3.058C27.677,24.815,27.351,25,27,25H23z"
-                      />
-                      <path
-                        fill="#1f212b"
-                        d="M61.5 25h-36c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h36c.276 0 .5.224.5.5S61.776 25 61.5 25zM73.5 25h-5c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h5c.276 0 .5.224.5.5S73.776 25 73.5 25zM66.5 25h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5S66.776 25 66.5 25zM50 76c-1.654 0-3-1.346-3-3V38c0-1.654 1.346-3 3-3s3 1.346 3 3v25.5c0 .276-.224.5-.5.5S52 63.776 52 63.5V38c0-1.103-.897-2-2-2s-2 .897-2 2v35c0 1.103.897 2 2 2s2-.897 2-2v-3.5c0-.276.224-.5.5-.5s.5.224.5.5V73C53 74.654 51.654 76 50 76zM62 76c-1.654 0-3-1.346-3-3V47.5c0-.276.224-.5.5-.5s.5.224.5.5V73c0 1.103.897 2 2 2s2-.897 2-2V38c0-1.103-.897-2-2-2s-2 .897-2 2v1.5c0 .276-.224.5-.5.5S59 39.776 59 39.5V38c0-1.654 1.346-3 3-3s3 1.346 3 3v35C65 74.654 63.654 76 62 76z"
-                      />
-                      <path
-                        fill="#1f212b"
-                        d="M59.5 45c-.276 0-.5-.224-.5-.5v-2c0-.276.224-.5.5-.5s.5.224.5.5v2C60 44.776 59.776 45 59.5 45zM38 76c-1.654 0-3-1.346-3-3V38c0-1.654 1.346-3 3-3s3 1.346 3 3v35C41 74.654 39.654 76 38 76zM38 36c-1.103 0-2 .897-2 2v35c0 1.103.897 2 2 2s2-.897 2-2V38C40 36.897 39.103 36 38 36z"
+                        fill-rule="evenodd"
+                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                        clip-rule="evenodd"
                       />
                     </svg>
                   </button>
@@ -219,25 +194,24 @@ export default function Videos({ imagesData }) {
                 </video> */}
                 <video
                   //   preload="none"
-                  className="lazy__item"
-                  style={{ height: '200px', objectFit: 'cover' }}
+                  className="h-[14rem] object-cover"
                   width={300}
                   src={`${item.url}#t=1`}
                 ></video>
-                <div style={{ padding: '10px' }}>
+                <div className="p-1">
                   <div
                     style={{
                       fontWeight: 700,
-                      fontSize: '20px',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
+                      fontSize: "20px",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
                     }}
                   >
                     {item.title}
                   </div>
-                  <div style={{ fontSize: '15px', color: 'lightgray' }}>
-                    Duration :{' '}
+                  <div style={{ fontSize: "15px", color: "lightgray" }}>
+                    Duration :{" "}
                     {item.duration
                       ? new Date(Math.floor(item.duration) * 1000)
                           .toISOString()
@@ -273,8 +247,8 @@ export default function Videos({ imagesData }) {
 }
 
 export async function getStaticProps(context) {
-  const imagesRef = collection(projectFirestore, 'videos');
-  const q = await query(imagesRef, orderBy('timestamp', 'desc'), limit(10));
+  const imagesRef = collection(projectFirestore, "videos");
+  const q = await query(imagesRef, orderBy("timestamp", "desc"), limit(10));
   const res = await getDocs(q);
   // const imagesRef = collection(projectFirestore, 'images');
   // const res = await getDocs(imagesRef);
