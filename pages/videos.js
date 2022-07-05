@@ -6,16 +6,16 @@ import {
   limit,
   orderBy,
   query,
-} from "firebase/firestore";
-import Head from "next/head";
-import { useEffect, useState, useRef } from "react";
-import Modal from "../components/Modal";
-import VideoUploadForm from "../components/VideoUploadForm";
-import { auth, projectFirestore } from "../firebase/config";
-import LazyLoad from "vanilla-lazyload";
-import lazyloadConfig from "../lazy-load/config";
-import { useAuth } from "../context/AuthUserContext";
-import LoginForm from "../components/LoginForm";
+} from 'firebase/firestore';
+import Head from 'next/head';
+import { useEffect, useState, useRef } from 'react';
+import Modal from '../components/Modal';
+import VideoUploadForm from '../components/VideoUploadForm';
+import { auth, projectFirestore } from '../firebase/config';
+import LazyLoad from 'vanilla-lazyload';
+import lazyloadConfig from '../lazy-load/config';
+import { useAuth } from '../context/AuthUserContext';
+import LoginForm from '../components/LoginForm';
 
 export default function Videos({ imagesData }) {
   const { authUser, loading, signOutFunc } = useAuth();
@@ -39,14 +39,14 @@ export default function Videos({ imagesData }) {
   const onDeleteIamge = async (e, id) => {
     e.stopPropagation();
 
-    const deleteRef = doc(projectFirestore, "videos", id);
+    const deleteRef = doc(projectFirestore, 'videos', id);
     await deleteDoc(deleteRef);
   };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -140,22 +140,21 @@ export default function Videos({ imagesData }) {
               Your browser does not support HTML video.
             </video>
           )}
-          {imagesState.map((item) => (
-            <div className="absolute justify-center w-full p-4 pb-4 mx-auto bg-white shadow-sm ">
-              <p className="font-bold text-[20px] whitespace-nowrap overflow-hidden overflow-ellipsis">
-                {item.title}
-              </p>
-              <p className="text-[15px] text-gray-500">
-                <span className="pr-2"> Duration :</span>
 
-                {item.duration
-                  ? new Date(Math.floor(item.duration) * 1000)
-                      .toISOString()
-                      .substring(14, 19)
-                  : null}
-              </p>
-            </div>
-          ))}
+          <div className="absolute justify-center w-full p-4 pb-4 mx-auto bg-white shadow-sm ">
+            <p className="font-bold text-[20px] whitespace-nowrap overflow-hidden overflow-ellipsis">
+              {selectedVideoToPlay.title}
+            </p>
+            <p className="text-[15px] text-gray-500">
+              <span className="pr-2"> Duration :</span>
+
+              {selectedVideoToPlay.duration
+                ? new Date(Math.floor(selectedVideoToPlay.duration) * 1000)
+                    .toISOString()
+                    .substring(14, 19)
+                : null}
+            </p>
+          </div>
         </div>
 
         {/* <UploadFormVideo /> */}
@@ -175,14 +174,14 @@ export default function Videos({ imagesData }) {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      class="h-5  w-5"
+                      className="h-5  w-5"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       />
                     </svg>
                   </button>
@@ -202,16 +201,16 @@ export default function Videos({ imagesData }) {
                   <div
                     style={{
                       fontWeight: 700,
-                      fontSize: "20px",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      fontSize: '20px',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {item.title}
                   </div>
-                  <div style={{ fontSize: "15px", color: "lightgray" }}>
-                    Duration :{" "}
+                  <div style={{ fontSize: '15px', color: 'lightgray' }}>
+                    Duration :{' '}
                     {item.duration
                       ? new Date(Math.floor(item.duration) * 1000)
                           .toISOString()
@@ -247,8 +246,8 @@ export default function Videos({ imagesData }) {
 }
 
 export async function getStaticProps(context) {
-  const imagesRef = collection(projectFirestore, "videos");
-  const q = await query(imagesRef, orderBy("timestamp", "desc"), limit(10));
+  const imagesRef = collection(projectFirestore, 'videos');
+  const q = await query(imagesRef, orderBy('timestamp', 'desc'), limit(10));
   const res = await getDocs(q);
   // const imagesRef = collection(projectFirestore, 'images');
   // const res = await getDocs(imagesRef);
