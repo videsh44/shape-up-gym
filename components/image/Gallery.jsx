@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import Loader from '../Loader';
-import Header from './Header';
-import Modal from './Modal';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "../Loader";
+import Header from "./Header";
+import Modal from "./Modal";
+import { motion } from "framer-motion";
 import {
   collection,
   deleteDoc,
@@ -14,9 +14,9 @@ import {
   orderBy,
   query,
   startAfter,
-} from 'firebase/firestore';
-import { projectFirestore } from '../../firebase/config';
-import { useAuth } from '../../context/AuthUserContext';
+} from "firebase/firestore";
+import { projectFirestore } from "../../firebase/config";
+import { useAuth } from "../../context/AuthUserContext";
 // import useFirestore from "../../../hooks/useFirestore";
 
 const Gallery = ({ imagesData, totalDocs }) => {
@@ -29,8 +29,8 @@ const Gallery = ({ imagesData, totalDocs }) => {
 
   useEffect(() => {
     (async () => {
-      const imagesRef = await collection(projectFirestore, 'images');
-      const q = await query(imagesRef, orderBy('timestamp', 'desc'), limit(8));
+      const imagesRef = await collection(projectFirestore, "images");
+      const q = await query(imagesRef, orderBy("timestamp", "desc"), limit(8));
       const res = await getDocs(q);
 
       const lastVisible = res.docs[res.docs.length - 1];
@@ -39,12 +39,12 @@ const Gallery = ({ imagesData, totalDocs }) => {
   }, []);
 
   const fetchImages = async () => {
-    const imagesRef = collection(projectFirestore, 'images');
+    const imagesRef = collection(projectFirestore, "images");
 
     if (lastImageRef) {
       const q = await query(
         imagesRef,
-        orderBy('timestamp', 'desc'),
+        orderBy("timestamp", "desc"),
         startAfter(lastImageRef),
         limit(8)
       );
@@ -55,7 +55,7 @@ const Gallery = ({ imagesData, totalDocs }) => {
       });
       const lastVisible = res.docs[res.docs.length - 1];
       setLastImageRef(lastVisible);
-      console.log('here it is', documents);
+      console.log("here it is", documents);
       let final_images = [...images, ...documents];
       setTotalItemsAfterDelete(final_images.length);
       setImages(final_images);
@@ -78,12 +78,12 @@ const Gallery = ({ imagesData, totalDocs }) => {
 
   const onDeleteIamge = async (e, id) => {
     e.stopPropagation();
-    const deleteRef = doc(projectFirestore, 'images', id);
+    const deleteRef = doc(projectFirestore, "images", id);
     await deleteDoc(deleteRef);
-    const imagesRef = collection(projectFirestore, 'images');
+    const imagesRef = collection(projectFirestore, "images");
     const q = query(
       imagesRef,
-      orderBy('timestamp', 'desc'),
+      orderBy("timestamp", "desc"),
       limit(totalItemsAfterDelete)
     );
     const res = await getDocs(q);
@@ -94,13 +94,13 @@ const Gallery = ({ imagesData, totalDocs }) => {
     const lastVisible = res.docs[res.docs.length - 1];
     setLastImageRef(lastVisible);
     /**............GET TOTAL............. */
-    const totQ = await query(imagesRef, orderBy('timestamp', 'desc'));
+    const totQ = await query(imagesRef, orderBy("timestamp", "desc"));
     const totRes = await getDocs(totQ);
     const totalDocs = totRes.docs.length;
     setTotal(totalDocs);
     // console.log(totalDocs);
     /**............GET TOTAL............. */
-    console.log('documents', documents);
+    console.log("documents", documents);
     setImages(documents);
     // const unsub = onSnapshot(q, (querySnapshot) => {
     //   let documents = [];
@@ -114,10 +114,10 @@ const Gallery = ({ imagesData, totalDocs }) => {
   };
 
   const updateImagesData = async () => {
-    const imagesRef = collection(projectFirestore, 'images');
+    const imagesRef = collection(projectFirestore, "images");
     const q = query(
       imagesRef,
-      orderBy('timestamp', 'desc'),
+      orderBy("timestamp", "desc"),
       limit(totalItemsAfterDelete)
     );
     const res = await getDocs(q);
@@ -129,11 +129,11 @@ const Gallery = ({ imagesData, totalDocs }) => {
     setLastImageRef(lastVisible);
 
     /**............GET TOTAL............. */
-    const totQ = await query(imagesRef, orderBy('timestamp', 'desc'));
+    const totQ = await query(imagesRef, orderBy("timestamp", "desc"));
     const totRes = await getDocs(totQ);
     const totalDocs = totRes.docs.length;
     setTotal(totalDocs);
-    console.log('documents', documents);
+    console.log("documents", documents);
     setImages(documents);
     // setTotal(length);
   };
@@ -155,47 +155,32 @@ const Gallery = ({ imagesData, totalDocs }) => {
         // hasMore={true}
         loader={<Loader />}
       >
-        <div className="w-full h-full p-8 pt-20 columns-1 lg:columns-4">
-          {images.map((image) => (
-            <motion.div
-              layout
-              whileHover={{ opacity: 1 }}
-              onClick={() => setImageModal(image.url)}
-              key={image.id}
-              className="relative w-full h-auto"
-            >
-              <motion.img
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="w-full h-auto mb-4 duration-300 ease-in rounded-md cursor-pointer hover:scale-105"
-                src={image.url}
-              />
-              {/* <figcaption className="mt-2">{image.user.name}</figcaption>
-              <p className="mb-2 text-sm text-gray-500 line-clamp-2">
-                {image.description}
-              </p> */}
-              {authUser && (
-                <button
-                  onClick={(e) => onDeleteIamge(e, image.id)}
-                  // style={{ position: "absolute", right: "-15px", top: "-15px" }}
-                  className="absolute z-50 p-1  hover:scale-105 duration-100 ease-in bg-white border-[1px] border-[#D0D5DD] rounded-full -right-3 -top-3"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+        <div className="w-full h-full p-8 pt-20 columns-4">
+          {images.map((data) => (
+            <div className="relative">
+              <img className="w-full mb-4" src={data.url}></img>
+              <div className="absolute -top-3 -right-3">
+                {authUser && (
+                  <button
+                    onClick={(e) => onDeleteIamge(e, data.id)}
+                    className="z-50 p-1 bg-white border-[1px] border-[#D0D5DD] rounded-full"
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              )}
-            </motion.div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-5 h-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </InfiniteScroll>

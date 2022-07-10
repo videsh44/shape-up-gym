@@ -6,16 +6,16 @@ import {
   limit,
   orderBy,
   query,
-} from 'firebase/firestore';
-import Head from 'next/head';
-import { useEffect, useState, useRef } from 'react';
-import Modal from '../components/Modal';
-import VideoUploadForm from '../components/VideoUploadForm';
-import { auth, projectFirestore } from '../firebase/config';
-import LazyLoad from 'vanilla-lazyload';
-import lazyloadConfig from '../lazy-load/config';
-import { useAuth } from '../context/AuthUserContext';
-import LoginForm from '../components/LoginForm';
+} from "firebase/firestore";
+import Head from "next/head";
+import { useEffect, useState, useRef } from "react";
+import Modal from "../components/Modal";
+import VideoUploadForm from "../components/VideoUploadForm";
+import { auth, projectFirestore } from "../firebase/config";
+import LazyLoad from "vanilla-lazyload";
+import lazyloadConfig from "../lazy-load/config";
+import { useAuth } from "../context/AuthUserContext";
+import LoginForm from "../components/LoginForm";
 
 export default function Videos({ imagesData }) {
   const { authUser, loading, signOutFunc } = useAuth();
@@ -39,14 +39,14 @@ export default function Videos({ imagesData }) {
   const onDeleteIamge = async (e, id) => {
     e.stopPropagation();
 
-    const deleteRef = doc(projectFirestore, 'videos', id);
+    const deleteRef = doc(projectFirestore, "videos", id);
     await deleteDoc(deleteRef);
   };
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   };
 
@@ -79,10 +79,11 @@ export default function Videos({ imagesData }) {
       >
         {authUser ? (
           <div className="w-full bg-white ">
-            <div className="flex items-center justify-end px-10 pb-8 mx-auto pt-[6rem]">
+            <div className="flex items-center justify-center flex-col lg:flex-row  lg:justify-end px-10 pb-8 mx-auto pt-[6rem]">
               <button
+                aria-label="shape up videos button"
                 onClick={() => setShowModal(true)}
-                className="inline-flex items-center  hover:scale-105 duration-100 ease-in  px-6 py-4 border-[#D0D5DD] font-bold text-white bg-[#161C2D] rounded-md cursor-pointer"
+                className="inline-flex items-center mb-2 lg:mb-0 hover:scale-105 duration-100 ease-in  px-6 py-4 border-[#D0D5DD] font-bold text-white bg-[#161C2D] rounded-md cursor-pointer"
               >
                 <svg
                   className="w-4 h-4 mr-2 fill-current"
@@ -97,18 +98,18 @@ export default function Videos({ imagesData }) {
               <button
                 aria-label="logout"
                 onClick={() => signOutFunc(auth)}
-                className="inline-flex items-center ml-4 hover:scale-105 duration-100 ease-in  px-6 py-4 border-[#D0D5DD] font-bold text-white bg-[#161C2D] rounded-md cursor-pointer"
+                className="inline-flex items-center justify-center  lg:ml-4 hover:scale-105 duration-100 ease-in  px-6 py-4 border-[#D0D5DD] font-bold text-white bg-red-600 rounded-md cursor-pointer"
               >
                 <span>Logout</span>
               </button>
             </div>
           </div>
         ) : (
-          <div className="justify-end w-full pt-20 bg-white">
+          <div className="items-center flex justify-end px-10 pb-8 mx-auto pt-[6rem]">
             <button
               aria-label="login"
               onClick={openLoginModal}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="inline-flex items-center  hover:scale-105 duration-100 ease-in  px-6 py-4 border-[#D0D5DD] font-bold text-white bg-blue-600 rounded-md cursor-pointer"
             >
               Login
               <svg
@@ -126,11 +127,11 @@ export default function Videos({ imagesData }) {
             </button>
           </div>
         )}
-        <div className="bg-black  relative h-[37.5rem] mb-12">
+        <div className="bg-black w-full relative h-[29rem] mb-12">
           {imagesState && (
             <video
               ref={videoPlayerRef}
-              className="main-video-player h-[37.5rem]"
+              className="main-video-player h-[29rem]"
               width="100%"
               height={300}
               controls
@@ -162,7 +163,11 @@ export default function Videos({ imagesData }) {
           <div className="flex flex-wrap items-center justify-center mt-28">
             {imagesState.map((item) => (
               <div
-                className="relative w-[300px] max-w-[300px] m-5 cursor-pointer"
+                style={{
+                  boxShadow:
+                    "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",
+                }}
+                className="relative  w-[300px] max-w-[300px] m-5 cursor-pointer"
                 onClick={() => onVideoSelectClick(item)}
                 key={item.id}
               >
@@ -174,7 +179,7 @@ export default function Videos({ imagesData }) {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5  w-5"
+                      className="w-5 h-5"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -197,20 +202,12 @@ export default function Videos({ imagesData }) {
                   width={300}
                   src={`${item.url}#t=1`}
                 ></video>
-                <div className="p-1">
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      fontSize: '20px',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
+                <div className="p-2 px-3">
+                  <div className="font-bold text-[20px] whitespace-nowrap overflow-hidden text-ellipsis">
                     {item.title}
                   </div>
-                  <div style={{ fontSize: '15px', color: 'lightgray' }}>
-                    Duration :{' '}
+                  <div style={{ fontSize: "15px", color: "lightgray" }}>
+                    Duration :{" "}
                     {item.duration
                       ? new Date(Math.floor(item.duration) * 1000)
                           .toISOString()
@@ -246,8 +243,8 @@ export default function Videos({ imagesData }) {
 }
 
 export async function getStaticProps(context) {
-  const imagesRef = collection(projectFirestore, 'videos');
-  const q = await query(imagesRef, orderBy('timestamp', 'desc'), limit(10));
+  const imagesRef = collection(projectFirestore, "videos");
+  const q = await query(imagesRef, orderBy("timestamp", "desc"), limit(10));
   const res = await getDocs(q);
   // const imagesRef = collection(projectFirestore, 'images');
   // const res = await getDocs(imagesRef);

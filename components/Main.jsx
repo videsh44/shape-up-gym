@@ -1,22 +1,22 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { AiOutlineMail } from 'react-icons/ai';
-import { BsFillPersonLinesFill } from 'react-icons/bs';
-import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
+import { AiOutlineMail } from "react-icons/ai";
+import { BsFillPersonLinesFill } from "react-icons/bs";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 const Main = () => {
   return (
-    <div id="home" className="w-full  h-screen text-center">
+    <div id="home" className="w-full h-screen text-center">
       <div className="absolute md:bg-[transparent] opacity-90 bg-[url('/assets/cover2.jpeg')] bg-top bg-cover bg-no-repeat w-full justify-evenly flex h-full lg:h-full"></div>
       <div className="max-w-[1240px] relative w-full h-full mx-auto p-2 flex justify-center items-center">
         <div>
-          <p className="uppercase text-sm tracking-widest font-medium text-white/80">
+          <p className="text-sm font-medium tracking-widest uppercase text-white/80">
             LET&#39;S BUILD SOMETHING TOGETHER
           </p>
           <h1 className="py-2 pt-4 text-white/90">
             Fitness Help Me Feel Better
           </h1>
-          <p className="py-4 text-gray-800 text-white/80 sm:max-w-[70%] m-auto">
+          <p className="py-4 text-white/80 sm:max-w-[70%] m-auto">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores
             nisi minus perspiciatis optio, id deserunt.
           </p>
@@ -27,7 +27,7 @@ const Main = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <div className="rounded-full shadow-lg shadow-gray-400 bg-white/95 p-6 cursor-pointer hover:scale-110 ease-in duration-300">
+              <div className="p-6 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 bg-white/95 hover:scale-110">
                 <FaLinkedinIn />
               </div>
             </a>
@@ -37,17 +37,17 @@ const Main = () => {
               target="_blank"
               rel="noreferrer"
             >
-              <div className="rounded-full shadow-lg shadow-gray-400 bg-white/95 p-6 cursor-pointer hover:scale-110 ease-in duration-300">
+              <div className="p-6 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 bg-white/95 hover:scale-110">
                 <FaGithub />
               </div>
             </a>
             <Link href="/#contact">
-              <div className="rounded-full shadow-lg shadow-gray-400 bg-white/95  p-6 cursor-pointer hover:scale-110 ease-in duration-300">
+              <div className="p-6 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 bg-white/95 hover:scale-110">
                 <AiOutlineMail />
               </div>
             </Link>
             <Link href="/resume">
-              <div className="rounded-full shadow-lg shadow-gray-400 bg-white/95 p-6 cursor-pointer hover:scale-110 ease-in duration-300">
+              <div className="p-6 duration-300 ease-in rounded-full shadow-lg cursor-pointer shadow-gray-400 bg-white/95 hover:scale-110">
                 <BsFillPersonLinesFill />
               </div>
             </Link>

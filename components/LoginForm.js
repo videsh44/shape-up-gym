@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { useAuth } from '../context/AuthUserContext';
-import { auth } from '../firebase/config';
-import ErrorToast from './ErrorToast';
+import { useState } from "react";
+import { useAuth } from "../context/AuthUserContext";
+import { auth } from "../firebase/config";
+import ErrorToast from "./ErrorToast";
 
 const LoginForm = ({ closeModal }) => {
   const { signInWithEmailAndPasswordFunc } = useAuth();
   const [errorToastState, setErrorToastState] = useState(null);
   const [state, setState] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const { email, password } = state;
 
@@ -25,15 +25,15 @@ const LoginForm = ({ closeModal }) => {
     console.log(email, password);
     try {
       const res = await signInWithEmailAndPasswordFunc(auth, email, password);
-      console.log('res', res);
+      console.log("res", res);
       closeModal();
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
       let temp_error = {
-        color: 'red',
-        primaryText: 'Validation Error',
-        secondaryText: '',
-        description: 'Invalid Credentials',
+        color: "red",
+        primaryText: "Validation Error",
+        secondaryText: "",
+        description: "Invalid Credentials",
       };
       setErrorToastState(temp_error);
     }
@@ -54,9 +54,9 @@ const LoginForm = ({ closeModal }) => {
           closeToastError={closeToastError}
         />
       )}
-      <div className=" flex bg-gray-bg1">
-        <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
-          <h1 className="text-2xl font-medium text-primary mt-4 mb-12 text-center">
+      <div className="flex bg-gray-bg1">
+        <div className="w-full max-w-md px-16 py-10 m-auto bg-white border rounded-lg border-primaryBorder shadow-default">
+          <h1 className="mt-4 mb-12 text-2xl font-medium text-center text-primary">
             Log in to your account 🔐
           </h1>
 
@@ -86,10 +86,10 @@ const LoginForm = ({ closeModal }) => {
             />
           </div>
 
-          <div className="flex justify-center items-center mt-6">
+          <div className="flex items-center justify-center mt-6">
             <button
               onClick={handleFormSubmit}
-              className={`bg-green py-2 px-4 text-sm text-white rounded border border-green focus:outline-none focus:border-green-dark`}
+              className={`bg-blue-600 py-2 px-4 text-sm text-white rounded border border-green focus:outline-none focus:border-green-dark`}
             >
               Login
             </button>

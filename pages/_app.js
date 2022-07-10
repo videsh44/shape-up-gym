@@ -1,6 +1,7 @@
-import Navbar from '../components/Navbar';
-import { AuthUserProvider } from '../context/AuthUserContext';
-import '../styles/globals.css';
+import Navbar from "../components/Navbar";
+import "../styles/globals.css";
+
+import { AuthUserProvider } from "../context/AuthUserContext";
 
 function MyApp({ Component, pageProps }) {
   return (
